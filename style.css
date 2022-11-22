@@ -1,0 +1,129 @@
+body{
+    background: black;
+    color: white;
+    font-family: 'Manrope', sans-serif;
+    font-size: 16px;
+  }
+    .welcome{
+      position: absolute;
+      padding: 2em 3em;
+      color: black;
+    }
+    #judul {
+      text-decoration: none;
+      color: white;
+    }
+    #judul:hover {
+      color: rgb(128, 126, 126);
+    }
+    .nav-1 {
+    background: rgb(31, 21, 19);
+    }
+    .nav-2{
+      margin: 1em 0;
+    }
+    .nav-2 ul {
+      border-radius: 50%;
+      box-shadow: 10px 15px 30px rgba(55, 6, 23, 0.6);
+    }
+    .nav-2 a{
+      color: white;
+    }
+    .nav-2 a:hover{
+      color: rgb(128, 126, 126);
+    }
+    h2{
+      text-align: center;
+      padding-bottom: 1em;
+    }
+    h3{
+      text-align: center;
+    }
+    article, main, footer{
+      padding: 4em 0 0 0;
+    }
+    #article h2{
+      padding-top: 1em;
+    }
+      .article {
+        border: 1px solid;
+        padding: 3em 1em;
+        border-radius: 15px;
+        background: rgba(254, 253, 253, 0.1);
+        box-shadow: 10px 15px 30px rgba(247, 236, 240, 0.4);
+        border-top: 2px solid rgba(247, 236, 240, 0.6);
+        border-left: 2px solid rgb(247, 236, 240, 0.6);
+        backdrop-filter: blur(5px);
+        color: white;
+      }
+      .article .number{
+        text-align: end;
+        padding: 0 20px;
+        filter: blur(1.5px);
+        font-size: 30px;
+      }
+      .article .value {
+        text-align: justify;
+      }
+
+    section h2{
+      color: white;
+    }
+    main h2{
+      padding: 0.5em;
+      margin: 1.2em;
+      border-radius: 50%;
+      box-shadow: 10px 15px 30px rgba(55, 6, 23, 0.6);
+    }
+
+    .dagangan {
+      color: black;
+    }
+    .dagangan h2{
+      padding: 3em 0 1em 0;
+    }
+    #jasa {
+      padding-top: 2em;
+    }
+    #jasa h2 {
+    }
+    .swiper {
+        margin-top: 2em;
+        width: 100%;
+        padding: 3em;
+        background: rgb(3, 7, 30);
+        border-radius: 20%;
+        box-shadow: 10px 15px 30px rgba(55, 6, 23);
+      }
+
+      .swiper-slide {
+        background-position: center;
+        background-size: cover;
+        width: 300px;
+        height: 515px;
+        /* background: rgb(237, 237, 233);
+        box-shadow: 0 15px 50px rgb(0, 0, 0,0.2); */
+        filter: blur(4px);
+        border-radius: 10px;
+      }
+      
+      .swiper-slide-active{
+        filter: blur(0px);
+        /* background: rgb(237, 237, 233); */
+      }
+
+      .swiper-slide-prev,
+      .swiper-slide-next{
+        background-image: none;
+      }
+
+      .swiper-slide img {
+        display: block;
+        width: 100%;
+      }
+
+      .img-thumbnail {
+        background-image: remove;
+        background: none;
+        border: none;
+      }
