@@ -4,16 +4,23 @@ body{
     font-family: 'Manrope', sans-serif;
     font-size: 16px;
   }
+  .flag {
+    list-style: none;
+  }
+  .england .indonesia{
+    height: 30px;
+    width: 30px;
+  }
     .welcome{
       position: absolute;
       padding: 2em 3em;
       color: black;
     }
-    #judul {
-      text-decoration: none;
+    .judul { 
       color: white;
+      text-decoration: none;
     }
-    #judul:hover {
+    .judul:hover {
       color: rgb(128, 126, 126);
     }
     .nav-1 {
@@ -84,8 +91,6 @@ body{
     }
     #jasa {
       padding-top: 2em;
-    }
-    #jasa h2 {
     }
     .swiper {
         margin-top: 2em;
