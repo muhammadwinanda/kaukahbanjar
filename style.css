@@ -4,16 +4,29 @@ body{
     font-family: 'Manrope', sans-serif;
     font-size: 16px;
   }
+  .topheader {
+    background: rgba(209, 6, 27, 0.1);
+  }
+  .judul h1{
+    font-size: 30px;
+  }
+  .flag {
+    list-style: none;
+  }
+  .flag img{
+    height: 30px;
+    
+  }
     .welcome{
       position: absolute;
       padding: 2em 3em;
       color: black;
     }
-    #judul {
-      text-decoration: none;
+    .judul { 
       color: white;
+      text-decoration: none;
     }
-    #judul:hover {
+    .judul:hover {
       color: rgb(128, 126, 126);
     }
     .nav-1 {
@@ -85,8 +98,6 @@ body{
     #jasa {
       padding-top: 2em;
     }
-    #jasa h2 {
-    }
     .swiper {
         margin-top: 2em;
         width: 100%;
@@ -127,3 +138,15 @@ body{
         background: none;
         border: none;
       }
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .judul h1{
+    font-size: 20px;
+    width: 175px;
+  }
+  .flag img{
+    width: 20px;
+    height: 20px;
+  }
+}
