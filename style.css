@@ -4,12 +4,15 @@ body{
     font-family: 'Manrope', sans-serif;
     font-size: 16px;
   }
-<<<<<<< HEAD
-  .topheader {
-    background: rgba(209, 6, 27, 0.1);
+  .judul a{
+    color: white;
+    text-decoration: none;
+  }
+  .judul a:hover{
+    color: rgb(190, 166, 30);
   }
   .judul h1{
-    font-size: 30px;
+    font-size: 25px;
   }
   .flag {
     list-style: none;
@@ -17,14 +20,6 @@ body{
   .flag img{
     height: 30px;
     
-=======
-  .flag {
-    list-style: none;
-  }
-  .england .indonesia{
-    height: 30px;
-    width: 30px;
->>>>>>> 42bb8173c38d0f299af1de64c22597ee60c132d6
   }
     .welcome{
       position: absolute;
