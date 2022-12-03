@@ -4,6 +4,7 @@ body{
     font-family: 'Manrope', sans-serif;
     font-size: 16px;
   }
+<<<<<<< HEAD
   .topheader {
     background: rgba(209, 6, 27, 0.1);
   }
@@ -16,6 +17,14 @@ body{
   .flag img{
     height: 30px;
     
+=======
+  .flag {
+    list-style: none;
+  }
+  .england .indonesia{
+    height: 30px;
+    width: 30px;
+>>>>>>> 42bb8173c38d0f299af1de64c22597ee60c132d6
   }
     .welcome{
       position: absolute;
