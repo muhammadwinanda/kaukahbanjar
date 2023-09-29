@@ -20,6 +20,8 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
     <link rel="stylesheet" href="style.css">
 
     <title>Kokka / Kaukah Banjar</title>
@@ -58,6 +60,9 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#jasa">Cara Pembelian</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#cekTarif">Cek Ongkir</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#testi">Testimoni</a>
@@ -220,16 +225,243 @@
               </div>
             </div>
           </div>
-          <!-- <div class="expedisi">
-            <h2>Expedisi</h2>
-            <div class="row luar-negri">
-              <div class="col">
 
+          <div id="cekTarif" class="mt-5 pt-5">
+            <form>
+              <div class="row p-4">
+                <div class="col-6">
+                  <div class="d-flex align-items-center flex-column">
+                    <label for="" class="mb-1">Pengiriman Dari</label>
+                    <input type="text" class="form-control-plaintext text-light text-center" value="Martapura Kab.Banjar 70600" disabled>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="d-flex align-items-center flex-column">
+                    <label for="" class="text-center mb-1">Pilih Negara Tujuan</label>
+                    <select id="pilihNegara" class="form-select" aria-label="Default select example">
+                      <option value="0" selected>Negara</option>
+                      <option value="1">Saudi Arabia</option>
+                      <option value="2">Malaysia</option>
+                      <option value="3">Singapura</option>
+                      <option value="4">Australia</option>
+                      <option value="5">Egypt (Mesir)</option>
+                    </select>
+                  </div>
+                </div>
               </div>
-
-
+              <div id="nominal" class="mt-3 p-3 d-flex flex-column">
+                <div class="d-flex flex-row mb-1">
+                  <label for="" class="col-6 text-center align-self-center">Tax Ongkir</label>
+                  <input disabled type="text" class="form-control text-end" id="taxOngkir" oninput="filterNumber(this)" placeholder="tax ongkir">
+                </div>
+                <div class="d-flex flex-row mb-1">
+                  <label for="" class="col-6 text-center align-self-center">Jika 1 kg</label>
+                  <input disabled type="text" class="form-control text-end" id="kg" oninput="filterNumber(this)" placeholder="harga /kg">
+                </div>
+                <div class="d-flex flex-row">
+                  <label for="" class="col-6 text-center align-self-center">Jika /5 ons kg</label>
+                  <input disabled type="text" class="form-control text-end" id="ons" oninput="filterNumber(this)" placeholder="harga /ons">
+                </div>
+              </div>
+              <div id="cekHarga" class="mt-3 p-3">
+                <div class="d-flex flex-row mb-1">
+                  <label for="" class="col-6 text-center align-self-center">Berat Barang (kg)</label>
+                  <input type="text" class="form-control text-end" id="berat" placeholder="Berat Maksimal 30kg">
+                </div>
+                <div class="d-flex flex-row mb-1">
+                  <label for="" class="col-6 text-center align-self-center">Nilai Barang</label>
+                  <input type="text" id="asuransi" class="col form-control text-end me-1" oninput="filterNumber(this), changeRp(this)" placeholder="Angka Rupiah">
+                  <input disabled type="text" class="col form-control text-end" id="convertAsuransi" oninput="filterNumber(this)" placeholder="Admin Nilai Barang">
+                </div>
+              </div>
+              <div class="d-flex align-items-center flex-column">
+                <button type="button" class="btn btn-primary mt-3" onclick="cekTarif()">Cek Tarif</button>
+              </div>
+            </form>
+            <div class="d-flex align-items-end flex-column">
+              <h6 id="pembayaran" class="border border-success me-3"></h6>
             </div>
-          </div> -->
+            <script>
+              const valueTarifNegara = [
+                {
+                  'SA' : {
+                    'tax' : 337000,
+                    'ons' : 72000,
+                    'kg' : 144000
+                  }
+                },
+                {
+                  'MY' : {
+                    'tax' : 195000,
+                    'ons' : 50000,
+                    'kg' : 100000
+                  }
+                },
+                {
+                  'SG' : {
+                    'tax' : 193000,
+                    'ons' : 50000,
+                    'kg' : 100000
+                  }
+                },
+                {
+                  'AU' : {
+                    'tax' : 350000,
+                    'ons' : 142000,
+                    'kg' : 284000
+                  }
+                },
+                {
+                  'EG' : {
+                    'tax' : 407500,
+                    'ons' : 78000,
+                    'kg' : 156000
+                  }
+                }
+              ]
+              function rupiah (element) {
+                return "Rp " + element.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+              }
+              function changeRp (element) {
+                element.addEventListener("input", function() {
+                  var jumlahUang = parseFloat(element.value);
+
+                  if (!isNaN(jumlahUang)) {
+                      var formattedJumlah = "Rp " + jumlahUang.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+
+                      element.value = formattedJumlah;
+                  }
+                });
+              }
+              $(document).ready(function() {
+              $('#berat').on('input', function() {
+                let nilaiBerat = $(this).val();
+              
+                // Menghilangkan karakter non-numerik
+                nilaiBerat.replace(/\D/g, '');
+                
+                // Mengubah nilai menjadi angka
+                let angkaBerat = parseInt(nilaiBerat);
+                
+                // Memeriksa apakah angkaBerat lebih dari 30
+                if (!isNaN(angkaBerat)) {
+                  if (angkaBerat > 30) {
+                    // Jika lebih besar dari 30, atur nilai menjadi 30
+                    angkaBerat = 30;
+                  }
+                } else {
+                  angkaBerat = 0;
+                }
+
+                // Memperbarui nilai elemen input
+                $(this).val(angkaBerat);
+              });
+
+              const asuransi = $('#asuransi');
+              const convertAsuransi = $('#convertAsuransi');
+              // Menambahkan event handler input pada elemen pertama
+              asuransi.on('input', function() {
+              // Mengambil nilai dari elemen pertama
+              const nilaiAsuransi = $(this).val();
+
+              // Menghilangkan karakter non-angka dari nilaiAsuransi
+              const nilaiNumerik = parseInt(nilaiAsuransi.replace(/[^0-9]/g, ''));
+
+              const hasil = nilaiNumerik * 0.005;
+              // Memperbarui nilai elemen kedua (convertAsuransi) dengan hasil perhitungan
+              const convertRupiah = rupiah(hasil)
+              convertAsuransi.val(convertRupiah);
+              });
+
+              $('#pilihNegara').change(function() {
+                // Mendapatkan nilai yang dipilih dari elemen <select>
+                const selectedValue = $(this).val();
+                
+                // Menampilkan teks yang sesuai dengan nilai yang dipilih
+                let hasilText = '';
+                switch (selectedValue) {
+                  case '0' :
+                    hasilText = $('#taxOngkir').val('');
+                    hasilText = $('#kg').val('');
+                    hasilText = $('#ons').val('');
+                    break;
+                  case '1':
+                    hasilText = $('#taxOngkir').val(rupiah(valueTarifNegara[0].SA.tax));
+                    hasilText = $('#kg').val(rupiah(valueTarifNegara[0].SA.kg));
+                    hasilText = $('#ons').val(rupiah(valueTarifNegara[0].SA.ons));
+                    break;
+                  case '2':
+                    hasilText = $('#taxOngkir').val(rupiah(valueTarifNegara[1].MY.tax));
+                    hasilText = $('#kg').val(rupiah(valueTarifNegara[1].MY.kg));
+                    hasilText = $('#ons').val(rupiah(valueTarifNegara[1].MY.ons));
+                    break;
+                  case '3':
+                    hasilText = $('#taxOngkir').val(rupiah(valueTarifNegara[2].SG.tax));
+                    hasilText = $('#kg').val(rupiah(valueTarifNegara[2].SG.kg));
+                    hasilText = $('#ons').val(rupiah(valueTarifNegara[2].SG.ons));
+                    break;
+                  case '4':
+                    hasilText = $('#taxOngkir').val(rupiah(valueTarifNegara[3].AU.tax));
+                    hasilText = $('#kg').val(rupiah(valueTarifNegara[3].AU.kg));
+                    hasilText = $('#ons').val(rupiah(valueTarifNegara[3].AU.ons));
+                    break;
+                  case '5':
+                    hasilText = $('#taxOngkir').val(rupiah(valueTarifNegara[4].EG.tax));
+                    hasilText = $('#kg').val(rupiah(valueTarifNegara[4].EG.kg));
+                    hasilText = $('#ons').val(rupiah(valueTarifNegara[4].EG.ons));
+                    break;
+                  default:
+                    hasilText = '';
+                }
+                // Menampilkan teks hasil dalam elemen dengan ID "hasilText"
+                $('#hasilText').text(hasilText);
+              });
+            });
+              
+            function filterNumber(input){
+              input.value = input.value.replace(/\D/g, '');
+            }
+            function beratBarang(input, max) {
+            let sanitizedValue = input.value.replace(/\D/g, '');
+              // Menghapus karakter non-numerik
+              if (sanitizedValue.length > max) {
+                input.value = sanitizedValue.slice(0, max); // Memotong nilai jika melebihi panjang maksimal
+              } else {
+                input.value = sanitizedValue; // Menggunakan nilai yang sudah divalidasi
+              }
+            }
+            
+            // button
+            function cekTarif() {
+            const cekValueFromInput = {
+              taxongkir : $('#taxOngkir').val(),
+              biayaKg : $('#kg').val(),
+              biayaOns : $('#ons').val(),
+              berat : $('#berat').val(),
+              admin : $('#convertAsuransi').val()
+            }
+            const convertNumerik = {
+              taxongkir : parseFloat(cekValueFromInput.taxongkir.replace(/[^0-9]/g, '')),
+              biayaKg : parseFloat(cekValueFromInput.biayaKg.replace(/[^0-9]/g, '')),
+              biayaOns : parseFloat(cekValueFromInput.biayaOns.replace(/[^0-9]/g, '')),
+              admin : parseFloat(cekValueFromInput.admin.replace(/[^0-9]/g, ''))
+            }
+            for (const key in cekValueFromInput) {
+              console.log(key + ": " + cekValueFromInput[key]);
+            }
+            for (const key in convertNumerik) {
+              console.log(key + ": " + convertNumerik[key]);
+            }
+
+            // Melakukan penjumlahan, nilai kg kurang 1 angka lalu + taxongkir + biayaOns
+              const kurangiBerat = cekValueFromInput.berat - 1;
+              const total = kurangiBerat * convertNumerik.biayaKg + convertNumerik.taxongkir + convertNumerik.biayaOns + convertNumerik.admin;
+              let pembayaran = $('#pembayaran');
+              pembayaran.text(rupiah(total))    
+              pembayaran.addClass('border-3 p-3 fw-bold');
+            }
+            </script>
+          </div>
         </section>
 
         <main id="testi">
